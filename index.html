@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Disco Party</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Montserrat', 'Segoe UI', sans-serif;
+      text-align: center;
+      transition: background-color 1s ease;
+      background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+      overflow-x: hidden;
+    }
+
+    .disco-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bg-light {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      opacity: 0.45;
+      filter: blur(30px);
+      animation: bg-disco 3s infinite alternate;
+      background: #ff4d4d;
+    }
+    .bg-light:nth-child(2) { background: #ffe066; left: 70%; top: 20%; animation-delay: 0.5s;}
+    .bg-light:nth-child(3) { background: #63e6be; left: 40%; top: 60%; animation-delay: 1s;}
+    .bg-light:nth-child(4) { background: #339af0; left: 80%; top: 80%; animation-delay: 1.5s;}
+    .bg-light:nth-child(5) { background: #b197fc; left: 20%; top: 50%; animation-delay: 2s;}
+    @keyframes bg-disco {
+      0%   { opacity: 0.4; transform: scale(1);}
+      50%  { opacity: 0.7; transform: scale(1.2);}
+      100% { opacity: 0.4; transform: scale(1);}
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      margin: 4rem auto 0 auto;
+      max-width: 500px;
+      background: rgba(30, 30, 60, 0.85);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      padding: 2.5rem 2rem 2rem 2rem;
+      backdrop-filter: blur(8px);
+      border: 2px solid rgba(255,255,255,0.1);
+    }
+
+    h1 {
+      font-family: 'Orbitron', 'Montserrat', sans-serif;
+      font-size: 2.7rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+      letter-spacing: 2px;
+      text-shadow:
+        0 0 12px #26cddd,
+        0 0 32px #ff4d4d,
+        0 0 48px #ffe066;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 12px #26cddd, 0 0 32px #ff4d4d, 0 0 48px #ffe066; }
+      to   { text-shadow: 0 0 32px #ffe066, 0 0 48px #26cddd, 0 0 64px #ff4d4d; }
+    }
+
+    .buttons {
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      margin: 0.5rem 0;
+      padding: 0.85rem 2rem;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #26cddd 0%, #339af0 100%);
+      color: #111;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 12px #26cddd55;
+      transition: background 0.3s, color 0.3s, transform 0.2s;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #ffe066 0%, #ff4d4d 100%);
+      color: #222;
+      transform: scale(1.07);
+    }
+
+    input {
+      padding: 0.7rem;
+      width: 70%;
+      margin-top: 1rem;
+      border-radius: 8px;
+      border: 1.5px solid #26cddd;
+      font-size: 1rem;
+      outline: none;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      transition: border 0.2s;
+    }
+    input:focus {
+      border: 1.5px solid #ffe066;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    iframe {
+      margin-top: 1.5rem;
+      width: 90%;
+      height: 350px;
+      border: none;
+      border-radius: 18px;
+      box-shadow: 0 2px 24px #26cddd44;
+      background: #000;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 1rem 0.5rem; }
+      h1 { font-size: 2rem; }
+      iframe { width: 98%; height: 220px; }
+      input { width: 95%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="disco-bg">
+    <div class="bg-light" style="top:10%; left:15%;"></div>
+    <div class="bg-light"></div>
+    <div class="bg-light"></div>
+    <div class="bg-light"></div>
+    <div class="bg-light"></div>
+  </div>
+  <div class="container">
+    <h1>🎉 Welcome to the Disco Party! 🎉</h1>
+    <p style="color:#ffe066; font-weight:bold; font-size:1.1rem; margin-bottom:1.5rem;">Choose your groove:</p>
+    <div class="buttons">
+      <button onclick="useDefault()">Use Site Music</button>
+      <button onclick="showPlaylistInput()">Use My Playlist</button>
+    </div>
+    <div id="playlistInput" class="hidden">
+      <input type="text" id="playlistUrl" placeholder="Paste your YouTube or Spotify URL" />
+      <button onclick="playUserPlaylist()">Play</button>
+    </div>
+    <div id="player"></div>
+  </div>
+
+  <script>
+    // Animated background color
+    const colors = ['#ff0055', '#00ffcc', '#6600ff', '#ffff00', '#00ff00'];
+    let colorIndex = 0;
+    setInterval(() => {
+      document.body.style.backgroundColor = colors[colorIndex];
+      colorIndex = (colorIndex + 1) % colors.length;
+    }, 1000);
+
+    function useDefault() {
+      document.getElementById('playlistInput').classList.add('hidden');
+      document.getElementById('player').innerHTML = `
+        <h2 style="color:#26cddd;">Now Playing: Default Party Mix</h2>
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      `;
+    }
+
+    function showPlaylistInput() {
+      document.getElementById('playlistInput').classList.remove('hidden');
+      document.getElementById('player').innerHTML = '';
+    }
+
+    function playUserPlaylist() {
+      const url = document.getElementById('playlistUrl').value.trim();
+      let embedUrl = url;
+
+      // Check for YouTube playlist
+      if (url.includes('youtube.com/playlist?list=')) {
+        const listId = url.split('list=')[1].split('&')[0];
+        embedUrl = `https://www.youtube.com/embed/videoseries?list=${listId}`;
+      } else if (url.includes('youtube.com/watch') && url.includes('list=')) {
+        const listId = url.split('list=')[1].split('&')[0];
+        embedUrl = `https://www.youtube.com/embed/videoseries?list=${listId}`;
+      } else if (url.includes('spotify.com/playlist/')) {
+        const playlistId = url.split('playlist/')[1].split('?')[0];
+        embedUrl = `https://open.spotify.com/embed/playlist/${playlistId}`;
+      }
+      // You can add more services here
+
+      document.getElementById('player').innerHTML = `
+        <h2 style="color:#26cddd;">Your Playlist</h2>
+        <iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      `;
+    }
+  </script>
+</body>
+</html>
